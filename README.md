@@ -125,7 +125,7 @@ We selected this dataset and this approach for its pre-labeled structure, divers
 
 #### **1.2.3 Data Structure**
 
-📂 Dataset/  
+📂 processed/  
 ├ 📁 train/  
 ├ 📁 val/  
 └ 📁 test/  
@@ -137,7 +137,6 @@ We selected this dataset and this approach for its pre-labeled structure, divers
 #### **1.2.4 Data Integrity & Cleaning**
 - Removed corrupted/empty files
 - Excluded images with people, posters, or diagrams
-- Discarded images where equipment <40% of frame
 - Manually verified folder labels
 
 #### **1.2.5 Augmentation (Training Only)**
@@ -148,7 +147,6 @@ Improves robustness across lighting + angles:
 - Horizontal flip
 - Brightness/contrast changes
 - Mild blur & noise
-- Perspective distortion
 
 
 #### **1.2.6 Train/Val/Test Split**
@@ -269,34 +267,34 @@ pip install -r requirements.txt
 ```
 ### Train the Model
 ```bash
-python src/train.py
+python train_model.py
 ```
-```bash
-python src/evaluate.py
-```
+
 ### Final Output
 The trained model will be saved under /models/ (if configured).
-Evaluation script prints final test accuracy and confusion matrix.
-
-### Final Test Accuracy
-Final Test Accuracy: [Add after running evaluation]
+Evaluation script prints confusion matrix on valid samples
 
 ### Repository Structure
 ```bash
-IronID_Project/
+IRONID/
+├── models/
+│   └── mobilenet_pruned.keras       # Saved pruned model artifact on validtion
+├── notebooks/                       # Experimental notebooks
+│   ├── data_preprocessing.ipynb
+│   └── Model_Experiment.ipynb
+├── Sample_Data/                     # Sample dataset structure
+│   ├── processed/
+│   └── raw/
+├── src/                             # Source code modules
+│   ├── __init__.py
+│   ├── data_loader.py
+│   ├── evaluate.py
+│   ├── models.py
+│   ├── preprocess_data.py
+│   └── utils.py
 ├── .gitignore
 ├── README.md
+├── confusionmatrixBaseline_Float32.png
 ├── requirements.txt
-├── data/
-│   ├── raw/
-│   └── processed/
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   └── 02_model_prototyping.ipynb
-└── src/
-    ├── __init__.py
-    ├── data_loader.py
-    ├── model.py
-    ├── train.py
-    └── evaluate.py
+└── train_model.py                   # Main training execution script
 ```
