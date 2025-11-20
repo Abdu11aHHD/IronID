@@ -47,7 +47,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="IronID Training Script")
-    parser.add_argument("--data_dir", type=str, default="data/processed", help="Path to processed data")
+    parser.add_argument("--data_dir", type=str, default="C:/Users/Abdullah/esktop/IronID_Project/IronID/Sample_Data/processed", help="Path to processed data")
     parser.add_argument("--batch_size", type=int, default=32, help="Batch size")
     parser.add_argument("--epochs", type=int, default=10, help="Baseline training epochs")
     parser.add_argument("--prune_epochs", type=int, default=5, help="Fine-tuning epochs for pruning")
