@@ -94,15 +94,16 @@ Dataset is custom-curated and labeled.
 
 ---
 
-## Section 1: Data Strategy & Architecture Design
+# 📊 Section 1: Data Strategy & Architecture Design
 
-### 1.1 Identification and Justification of Data Sources
+## 1.1 Identification and Justification of Data Sources
 
-**Public image datasets:**  
-We will supplement our dataset with open-source images from Kaggle 
+### 📂 Source
+**Public Kaggle Gym Equipment Dataset**
+*Targeting 10 specific equipment classes.*
 
-**Justification:**  
-This hybrid approach provides diverse and realistic coverage of the most common gym machine types while remaining ethical and privacy-safe.
+### Justification
+We selected this dataset and this approach for its pre-labeled structure, diverse lighting conditions, ensuring efficient training and reliable validation.
 
 ---
 
@@ -191,6 +192,19 @@ Improves robustness across lighting + angles:
 | MobileNetV3-Small | 3.6 MB | 92% | Fast, weak performance |
 | EfficientNet-B0 | 15.5 MB | 99% | High accuracy, too heavy |
 | **MobileNetV3-Large** | **11.5 MB** | **97%** | **Selected (best balance)** |
+---
+---
+### **2.3 Knowledge Distillation**
+We also tried to increase the accuracy of MobileNetV3-Small Using Knowledge Distillation, letting EfficientNet-B0 (Hieghts Accuracy) as a teacher but it didn't work that well.
+- Teacher: EfficientNet-B0
+- Student: MobileNetV3-Small
+- Temperature: **3**
+- Alpha: **0.5**
+
+| Model | Accuracy | Size |
+|--------|----------|------|
+| Student Baseline | 92% | 3.6MB |
+| **Distilled Student** | **95%** | 3.6MB |
 
 ---
 ## Section 3: Optimization (Pruning, Quantization, Distillation)
@@ -210,22 +224,8 @@ Improves robustness across lighting + angles:
 | Int8 Dynamic | ~3MB | 97.06% |
 | Full Int8 | ~3MB | 87.25% |
 
-Final deployed model:  
-**`model_pruned_int8_dynamic.tflite`**
----
-### **3.3 Knowledge Distillation**
-- Teacher: EfficientNet-B0
-- Student: MobileNetV3-Small
-- Temperature: **3**
-- Alpha: **0.5**
+Final deployed model:  We will try Int8 Dynamic and Float16.
 
-| Model | Accuracy | Size |
-|--------|----------|------|
-| Student Baseline | 92% | 3.6MB |
-| **Distilled Student** | **95%** | 3.6MB |
-
-
----
 
 ### Data Pipeline Overview
 ```bash
@@ -261,22 +261,8 @@ Model Training
  └─ Treadmill/
 ```
 
----
 
-### Class Labels
-```bash
-Barbell  
-Bench Press  
-Dumbbell  
-Kettlebell  
-Leg Press  
-Punching Bag  
-Ab Roller  
-Stationary Bicycle  
-Step Platform  
-Treadmill  
 
-```
 ---
 
 ## Running the Project
