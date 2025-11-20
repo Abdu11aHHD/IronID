@@ -45,13 +45,13 @@ This ensures **instant recognition + personalized guidance**—anywhere.
 
 ## Features
 
-### ** 1. Snap & Identify (Offline)**
+### **1. Snap & Identify (Offline)**
 - Recognizes fitness machines in real-time
 - Runs fully on-device using TFLite
 - Shows usage tips + quick tutorial videos
 - Privacy-first (no uploads)
 
-### ** 2. AI Workout Coach (Online)**
+### **2. AI Workout Coach (Online)**
 Ask natural language questions like:
 **Example Flow**
 
