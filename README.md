@@ -125,7 +125,7 @@ We selected this dataset and this approach for its pre-labeled structure, divers
 
 #### **1.2.3 Data Structure**
 
-📂 Dataset/  
+📂 processed/  
 ├ 📁 train/  
 ├ 📁 val/  
 └ 📁 test/  
@@ -137,7 +137,6 @@ We selected this dataset and this approach for its pre-labeled structure, divers
 #### **1.2.4 Data Integrity & Cleaning**
 - Removed corrupted/empty files
 - Excluded images with people, posters, or diagrams
-- Discarded images where equipment <40% of frame
 - Manually verified folder labels
 
 #### **1.2.5 Augmentation (Training Only)**
