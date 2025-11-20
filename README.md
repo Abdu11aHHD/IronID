@@ -1,17 +1,17 @@
-# 🏋️‍♂️ IronID — AI-Powered Gym Assistant
+#  IronID — AI-Powered Gym Assistant
 
 > A hybrid AI mobile app that identifies gym equipment offline and provides personalized workout guidance online.
 
 ---
 
-## 🚀 Overview
+##  Overview
 
 **IronID Trainer** is designed to eliminate *gym anxiety* for beginners by helping them understand and properly use gym equipment without relying on trainers, labels, or prior experience.
 
 The app combines:
 
-- **📸 Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
-- **🤖 Online AI Coach** — Provides tailored workout routines, tips.
+- ** Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
+- ** Online AI Coach** — Provides tailored workout routines, tips.
 
 All vision processing is *fully private* and never leaves the device.
 
@@ -36,22 +36,22 @@ IronID provides a **dual-system AI pipeline**:
 
 | Component | Description |
 |----------|------------|
-| **🟢 Vision Model (Offline)** | Identifies equipment from camera input without internet |
-| **🔵 AI Chatbot (Online)** | Generates routines, answers questions, workout plan for beginners |
+| ** Vision Model (Offline)** | Identifies equipment from camera input without internet |
+| ** AI Chatbot (Online)** | Generates routines, answers questions, workout plan for beginners |
 
 This ensures **instant recognition + personalized guidance**—anywhere.
 
 ---
 
-## 🌟 Features
+## Features
 
-### **📸 1. Snap & Identify (Offline)**
+### ** 1. Snap & Identify (Offline)**
 - Recognizes fitness machines in real-time
 - Runs fully on-device using TFLite
 - Shows usage tips + quick tutorial videos
 - Privacy-first (no uploads)
 
-### **🤖 2. AI Workout Coach (Online)**
+### ** 2. AI Workout Coach (Online)**
 Ask natural language questions like:
 **Example Flow**
 
@@ -73,7 +73,7 @@ Ask natural language questions like:
 
 ---
 
-## 🏋️ Supported Equipment
+## Supported Equipment
 
 The current model detects **10 classes**:
 
@@ -98,17 +98,8 @@ Dataset is custom-curated and labeled.
 
 ### 1.1 Identification and Justification of Data Sources
 
-**Self-captured images:**  
-We will capture photos of real gym machines using different mobile devices and lighting conditions. Each image will be manually labeled with its correct machine name (e.g., *Leg Press*, *Lat Pulldown*, *Chest Press*).  
-This ensures realistic, privacy-compliant data that represents real gym environments.
-
 **Public image datasets:**  
-We will supplement our dataset with open-source images from:
-1. [Gym Equipment Dataset 1](https://www.kaggle.com/datasets/rifqilukmansyah381/gym-equipment) — Dumbbells, Elliptical Machines, Recumbent Bikes  
-2. [Gym Equipment Dataset 2](https://www.kaggle.com/datasets/aadarshvelu/gym-equipements-classification) — BenchPress, DumbBell, KettleBell, PullBar, TreadMill  
-3. [Gym Tools Dataset](https://www.kaggle.com/datasets/teguhbudi/gym-tools) — Barbell, Dumbell, Leg Press, Treadmill, etc.  
-4. [Gym Equipment Dataset 3](https://www.kaggle.com/datasets/dutt2302/gym-equipment) — Rowing Machine, Multi Machine, Treadmill  
-5. [Gym Equipment Image Set](https://www.kaggle.com/datasets/rifqilukmansyah381/gym-equipment-image/data) — Smith Machine, Bench Press, Elliptical, Recumbent Bike  
+We will supplement our dataset with open-source images from Kaggle 
 
 **Justification:**  
 This hybrid approach provides diverse and realistic coverage of the most common gym machine types while remaining ethical and privacy-safe.
