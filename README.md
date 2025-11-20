@@ -211,7 +211,6 @@ We also tried to increase the accuracy of MobileNetV3-Small Using Knowledge Dist
 ### **3.1 Pruning**
 - Polynomial decay pruning
 - Final sparsity: **50%**
-- Applied to Dense + Conv layers
 
 → Reduced computation cost before quantization.
 ---
