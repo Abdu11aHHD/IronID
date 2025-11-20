@@ -10,8 +10,8 @@
 
 The app combines:
 
-- ** Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
-- ** Online AI Coach** — Provides tailored workout routines, tips.
+- **Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
+- **Online AI Coach** — Provides tailored workout routines, tips.
 
 All vision processing is *fully private* and never leaves the device.
 
@@ -36,8 +36,8 @@ IronID provides a **dual-system AI pipeline**:
 
 | Component | Description |
 |----------|------------|
-| ** Vision Model (Offline)** | Identifies equipment from camera input without internet |
-| ** AI Chatbot (Online)** | Generates routines, answers questions, workout plan for beginners |
+| **Vision Model (Offline)** | Identifies equipment from camera input without internet |
+| **AI Chatbot (Online)** | Generates routines, answers questions, workout plan for beginners |
 
 This ensures **instant recognition + personalized guidance**—anywhere.
 
