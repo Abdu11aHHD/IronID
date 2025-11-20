@@ -155,8 +155,6 @@ Improves robustness across lighting + angles:
 - **Train:** 80%  
 - **Validation:** 10%  
 - **Test:** 10%  
-- Stratified by class
-- Split before augmentation to prevent duplicates across sets
 
 ---
 ## Section 2: Model Architecture & Training
