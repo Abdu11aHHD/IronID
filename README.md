@@ -269,34 +269,34 @@ pip install -r requirements.txt
 ```
 ### Train the Model
 ```bash
-python src/train.py
+python train_model.py
 ```
-```bash
-python src/evaluate.py
-```
+
 ### Final Output
 The trained model will be saved under /models/ (if configured).
-Evaluation script prints final test accuracy and confusion matrix.
-
-### Final Test Accuracy
-Final Test Accuracy: [Add after running evaluation]
+Evaluation script prints confusion matrix on valid samples
 
 ### Repository Structure
 ```bash
-IronID_Project/
+IRONID/
+├── models/
+│   └── mobilenet_pruned.keras       # Saved pruned model artifact on validtion
+├── notebooks/                       # Experimental notebooks
+│   ├── data_preprocessing.ipynb
+│   └── Model_Experiment.ipynb
+├── Sample_Data/                     # Sample dataset structure
+│   ├── processed/
+│   └── raw/
+├── src/                             # Source code modules
+│   ├── __init__.py
+│   ├── data_loader.py
+│   ├── evaluate.py
+│   ├── models.py
+│   ├── preprocess_data.py
+│   └── utils.py
 ├── .gitignore
 ├── README.md
+├── confusionmatrixBaseline_Float32.png
 ├── requirements.txt
-├── data/
-│   ├── raw/
-│   └── processed/
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   └── 02_model_prototyping.ipynb
-└── src/
-    ├── __init__.py
-    ├── data_loader.py
-    ├── model.py
-    ├── train.py
-    └── evaluate.py
+└── train_model.py                   # Main training execution script
 ```
