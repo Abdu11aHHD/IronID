@@ -13,7 +13,7 @@ The app combines:
 - **Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
 - **Online AI Coach** — Provides tailored workout routines, tips.
 
-All vision processing is *fully private* and never leaves the device.
+All vision processing is fully private and never leaves the device.
 
 ---
 
