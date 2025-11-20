@@ -6,7 +6,7 @@
 
 ## 🚀 Overview
 
-**IronID Trainer** is designed to eliminate *gym anxiety* for beginners by helping them understand and properly use gym equipment without relying on trainers, labels, or prior experience.
+**IronID Trainer** is designed to eliminate gym anxiety for beginners by helping them understand and properly use gym equipment without relying on trainers, labels, or prior experience.
 
 The app combines:
 
