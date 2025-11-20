@@ -55,8 +55,8 @@ This ensures **instant recognition + personalized guidance**—anywhere.
 Ask natural language questions like:
 **Example Flow**
 
-- **🤵:** My weight is 123 lbs
-- **🤖:** Noted — your current weight is 123 lbs.
+- **🤵:** My weight is 123 KG
+- **🤖:** Noted — your current weight is 123 KG.
 - **🤵:** My goal is Fat Loss
 - **🤖:** Generating a personalized weekly plan.
 
