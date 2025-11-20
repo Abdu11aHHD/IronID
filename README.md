@@ -90,7 +90,6 @@ The current model detects **10 classes**:
 | Step Platform | Aerobic workouts |
 | Treadmill | Running/walking |
 
-Dataset is custom-curated and labeled.
 
 ---
 
