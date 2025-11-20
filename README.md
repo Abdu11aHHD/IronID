@@ -147,7 +147,6 @@ Improves robustness across lighting + angles:
 - Horizontal flip
 - Brightness/contrast changes
 - Mild blur & noise
-- Perspective distortion
 
 
 #### **1.2.6 Train/Val/Test Split**
