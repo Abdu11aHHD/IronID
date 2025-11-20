@@ -1,7 +1,96 @@
-# IronID Project
+# 🏋️‍♂️ IronID — AI-Powered Gym Assistant
 
-### Smart Gym Equipment Recognition System  
-A deep learning system for recognizing gym equipment from real-world photos using **MobileNetV3-Large**, optimized for mobile inference and offline functionality.
+> A hybrid AI mobile app that identifies gym equipment offline and provides personalized workout guidance online.
+
+---
+
+## 🚀 Overview
+
+**IronID Trainer** is designed to eliminate *gym anxiety* for beginners by helping them understand and properly use gym equipment without relying on trainers, labels, or prior experience.
+
+The app combines:
+
+- **📸 Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
+- **🤖 Online AI Coach** — Provides tailored workout routines, tips.
+
+All vision processing is *fully private* and never leaves the device.
+
+---
+
+## 🔍 Problem
+
+Beginners often feel overwhelmed in the gym due to:
+
+- Lack of guidance
+- Confusing machine usage
+- Risk of injury from poor form
+- Fear of looking inexperienced
+
+Traditional trainers are not always available, and online guides lack personalization.
+
+---
+
+## ✔️ Solution
+
+IronID provides a **dual-system AI pipeline**:
+
+| Component | Description |
+|----------|------------|
+| **🟢 Vision Model (Offline)** | Identifies equipment from camera input without internet |
+| **🔵 AI Chatbot (Online)** | Generates routines, answers questions, workout plan for beginners |
+
+This ensures **instant recognition + personalized guidance**—anywhere.
+
+---
+
+## 🌟 Features
+
+### **📸 1. Snap & Identify (Offline)**
+- Recognizes fitness machines in real-time
+- Runs fully on-device using TFLite
+- Shows usage tips + quick tutorial videos
+- Privacy-first (no uploads)
+
+### **🤖 2. AI Workout Coach (Online)**
+Ask natural language questions like:
+**Example Flow**
+
+- **🤵:** My weight is 123 lbs
+- **🤖:** Noted — your current weight is 123 lbs.
+- **🤵:** My goal is Fat Loss
+- **🤖:** Generating a personalized weekly plan.
+
+**Sample Output (Week Overview)**
+
+- **Monday — Full Body Circuit**  
+   Squats, Push-ups, Rows, Burpees — 3×12
+  
+- **Tuesday — Cardio & Core**  
+   30-min HIIT, Planks, Crunches — 3×10
+  
+- **Wednesday — Upper Body Strength**  
+   Bench Press, Pull-ups, Shoulder Press — 3×12
+
+---
+
+## 🏋️ Supported Equipment
+
+The current model detects **10 classes**:
+
+| Class | Example |
+|-------|---------|
+| Barbell | Deadlifts, squats |
+| Bench Press | Flat/incline/decline |
+| Dumbbell | Free weights |
+| Kettlebell | Swings, snatches |
+| Leg Press | Lower body machine |
+| Punching Bag | Boxing equipment |
+| Ab Roller | Core training |
+| Stationary Bicycle | Cardio equipment |
+| Step Platform | Aerobic workouts |
+| Treadmill | Running/walking |
+
+Dataset is custom-curated and labeled.
 
 ---
 
@@ -26,101 +115,124 @@ This hybrid approach provides diverse and realistic coverage of the most common 
 
 ---
 
-### 1.2 Data Collection and Cleaning Plan
+### **1.2 Data Preprocessing Pipeline**
 
-#### A) Image Capture and Scraping Protocol
-- **Devices:** Smartphones from team members.  
-- **Angles:** Front, left, right, back, top (if possible) — each at multiple distances.  
-- **Lighting:** Bright/dim, daylight/warm LED, with/without mirrors.  
-- **Target:** ~100–150 images per class.  
-- **Naming Convention:** `class_device_initials_index.jpg` (e.g., `leg_press_s23_MA_0041.jpg`).
+#### **1.2.1 Dataset Loading**
+- Loaded using `image_dataset_from_directory()`
+- Automatic label assignment based on folder structure
+- Batch size: **32**
+- Target resolution: **224×224×3**
+- Shuffled only during training
 
-#### B) Data Cleaning
-- Remove diagrams, infographics, or photos with people.
-- Skip unreadable files; rotate and strip EXIF data for privacy.
-- Convert all to `.jpg` (quality 90), RGB color.
-- Remove blurry or duplicate images (using pHash/dHash & SSIM).
-- Crop or discard images where the machine occupies <40% of the frame.
-- Normalize lighting with CLAHE or white balance if needed.
-- Verify label-content consistency.
+#### **1.2.2 Data Normalization**
+- Converted to RGB if needed
+- Normalized using model-specific preprocessing:
+  - `mobilenet_v3.preprocess_input` (MobileNet models)
+  - `efficientnet.preprocess_input` (EfficientNet models)
+- Scales pixel values to normalized float ranges
 
-#### C) Data Preprocessing
-- Resize → 224×224 pixels.
-- Normalize → `[0, 1]` scale (model-specific if needed).
-- Augment underrepresented classes to maintain balance.
 
-#### D) Data Augmentation (Training Only)
-- Random rotation (±20°), flip, zoom (±15%), perspective warp.
-- Adjust brightness, contrast, add slight blur/noise.
-- Applied only to training data.
+#### **1.2.3 Data Structure**
 
-#### E) Splits
+📂 Dataset/  
+├ 📁 train/  
+├ 📁 val/  
+└ 📁 test/  
+
+- Clean separation of evaluation data  
+- Prevents data leakage across splits
+
+
+#### **1.2.4 Data Integrity & Cleaning**
+- Removed corrupted/empty files
+- Excluded images with people, posters, or diagrams
+- Discarded images where equipment <40% of frame
+- Manually verified folder labels
+
+#### **1.2.5 Augmentation (Training Only)**
+Improves robustness across lighting + angles:
+
+- Rotation (±20°)
+- Random zoom (±15%)
+- Horizontal flip
+- Brightness/contrast changes
+- Mild blur & noise
+- Perspective distortion
+
+
+#### **1.2.6 Train/Val/Test Split**
 - **Train:** 80%  
 - **Validation:** 10%  
 - **Test:** 10%  
-(Stratified by class; duplicates remain within one split.)
+- Stratified by class
+- Split before augmentation to prevent duplicates across sets
 
 ---
+## Section 2: Model Architecture & Training
 
-### Data Preprocessing Summary
+### **2.1 Model Architecture**
 
-- Resized all images to **224×224 RGB**.
-- Normalized pixel intensities to `[0,1]`.
-- Augmented data to simulate real-world variation:
-  - Rotation, flip, zoom, brightness/contrast, Gaussian blur, perspective.
-- Maintained class balance.
+#### **2.1.1 Base Network**
+- MobileNetV3-Large pretrained on ImageNet
+- Top removed, frozen as feature extractor
+- Optimized for fast mobile inference
+
+#### **2.1.2 Custom Classification Head**
+- Global Average Pooling
+- Softmax layer for 10 classes
+- Lightweight and TFLite-ready
+---
+### **2.2 Training Configuration**
+
+#### **2.2.1 Training Info**
+- Loss: Sparse Categorical Crossentropy
+- batch size 32
+- 10 epochs (transfer learning)
+
+#### **2.2.2 Evaluation Pipeline**
+- Run predictions using `model.predict()`
+- Evaluate using accuracy + F1/precision/recall
+- Visualize results with Confusion matrix
+
+#### **2.2.3 Model Selection Summary**
+| Model | Size | Accuracy | Verdict |
+|-------|------|----------|---------|
+| MobileNetV3-Small | 3.6 MB | 92% | Fast, weak performance |
+| EfficientNet-B0 | 15.5 MB | 99% | High accuracy, too heavy |
+| **MobileNetV3-Large** | **11.5 MB** | **97%** | **Selected (best balance)** |
 
 ---
+## Section 3: Optimization (Pruning, Quantization, Distillation)
+### **3.1 Pruning**
+- Polynomial decay pruning
+- Final sparsity: **50%**
+- Applied to Dense + Conv layers
 
-## Section 2: Detailed System Design
-
-### Logical Architecture
-**UI (Mobile App):**
-- Capture or upload gym equipment photos.
-- Display classification results and confidence scores.
-- Provide bilingual guidance content.
-- Works fully offline for privacy and reliability.
-
+→ Reduced computation cost before quantization.
 ---
+### **3.2 Quantization Outputs**
 
-### Model Training & Experimentation
+| Format | Size | Accuracy |
+|--------|------|-------|
+| Float32 TFLite | ~11MB | 96.08% |
+| Float16 | ~6MB | 96.08% |
+| Int8 Dynamic | ~3MB | 97.06% |
+| Full Int8 | ~3MB | 87.25% |
 
-**Preprocessing Steps:**
-- Resize: 224×224 pixels  
-- Crop: Center-crop for focus  
-- Normalize: Scale pixels to `[0–1]` or `[-1–1]`
-
-**Model:**
-- **Architecture:** MobileNetV3-Large (INT8 quantized)
-- **Framework:** TensorFlow / Keras
-- **Optimizer:** Adam
-- **Loss Function:** Categorical Cross-Entropy
-- **Metrics:** Accuracy, Precision, Recall, F1-score
-- **Early stopping** and **learning rate scheduling** used.
-
-**Deployment:**
-- Export best model as TensorFlow Lite (TFLite)
-- Optimized for mobile CPUs (inference <200 ms)
-- Offline operation with update support through API Gateway.
-
+Final deployed model:  
+**`model_pruned_int8_dynamic.tflite`**
 ---
+### **3.3 Knowledge Distillation**
+- Teacher: EfficientNet-B0
+- Student: MobileNetV3-Small
+- Temperature: **3**
+- Alpha: **0.5**
 
-### API Gateway & Model Inference Service
+| Model | Accuracy | Size |
+|--------|----------|------|
+| Student Baseline | 92% | 3.6MB |
+| **Distilled Student** | **95%** | 3.6MB |
 
-**Core Functionality:**
-- Receives image → preprocess (resize, normalize)
-- Runs MobileNetV3-Large TFLite inference
-- Returns top predicted label + confidence score
-
-**Post-processing:**
-- Confidence thresholding  
-- Sends result to UI  
-- Triggers usage guide display  
-
-**Performance:**
-- Inference latency: **<200 ms**  
-- Fully offline operation  
-- Model updates available via API Gateway
 
 ---
 
@@ -146,56 +258,34 @@ Model Training
 #### **Dataset structure example:**
 ```bash 
 /dataset/
- ├─ leg_press/
- ├─ treadmill/
- ├─ bench_press/
- ├─ pull_bar/
- ├─ elliptical/
- ├─ recumbent_bike/
- ├─ rowing_machine/
- ├─ smith_machine/
- └─ static_bicycle/
+ ├─ Barbell/
+ ├─ Bench Press/
+ ├─ Dumbbell/
+ ├─ Kettlebell/
+ ├─ Leg Press/
+ ├─ Punching Bag/
+ ├─ Ab Roller/
+ ├─ Stationary Bicycle/
+ ├─ Step Platform/
+ └─ Treadmill/
 ```
-
-
----
-
-## Section 3: Model Development Plan
-
-### Baseline Model Choice
-**Model:** MobileNetV3-Large (pre-trained on ImageNet)  
-**Justification:**
-- Optimized for **mobile and embedded devices**
-- Compact (≈21 MB FP32, ≤10 MB INT8 quantized)
-- Excellent accuracy-speed tradeoff
-- Supports **transfer learning** → less data, faster convergence
-
----
-
-### Experimentation Plan & Evaluation Metrics
-
-| Metric Type | Metric | Target |
-|--------------|---------|--------|
-| **Model** | Top-1 Accuracy | ≥ 80% |
-| **Model** | Confusion Matrix | To track look-alike misclassifications |
-| **System** | Model Size | ≤ 25 MB |
-| **System** | Inference Latency | ≤ 200 ms |
 
 ---
 
 ### Class Labels
 ```bash
-Leg Press
-Static Bicycle
-Treadmill
-Bench Press
-Pull Bar
-Elliptical Machine
-Recumbent Bike
-Rowing Machine
-Smith Machine
-```
+Barbell  
+Bench Press  
+Dumbbell  
+Kettlebell  
+Leg Press  
+Punching Bag  
+Ab Roller  
+Stationary Bicycle  
+Step Platform  
+Treadmill  
 
+```
 ---
 
 ## Running the Project
