@@ -1,0 +1,8 @@
+2025-12-04 23:33:26,241 - INFO - 🚀 IronID Training Started
+2025-12-04 23:33:26,325 - INFO - Data loaded. Classes: ['barbell', 'bench-press', 'dumbell', 'kattle-ball', 'leg-press', 'punching-bag', 'roller-abs', 'statis-bicycle', 'step', 'treadmill']
+2025-12-04 23:33:27,999 - INFO - === Phase 1: Training Baseline ===
+2025-12-04 23:34:52,809 - INFO - Baseline evaluation complete.
+2025-12-04 23:34:52,809 - INFO - === Phase 2: Pruning ===
+2025-12-04 23:35:40,084 - INFO - === Phase 3: Saving Models ===
+2025-12-04 23:35:55,357 - INFO - Assets written to: /tmp/tmp1l72bf57/assets
+2025-12-04 23:36:03,717 - INFO - ✅ Training Pipeline Complete!

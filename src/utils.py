@@ -1,13 +1,33 @@
 import os
 import numpy as np
+import logging 
+from datetime import datetime
+import tf_keras as keras
 import tensorflow as tf
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+def setup_logger(name, log_dir="logs"):
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = os.path.join(log_dir, f"{name}_{timestamp}.log")
+
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[
+            logging.FileHandler(log_file),
+            logging.StreamHandler()
+        ]
+    )
+    return logging.getLogger(name)
+
 def convert_to_tflite_fp16(keras_model_path, save_path):
     print(f"--- Converting to TFLite (Float16) ---")
-    model = tf.keras.models.load_model(keras_model_path)
+    model = keras.models.load_model(keras_model_path)
     converter = tf.lite.TFLiteConverter.from_keras_model(model)
 
 #Float16 Optimization
