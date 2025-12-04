@@ -1,0 +1,52 @@
+name: IronID CI/CD Pipeline
+
+# Trigger: Run this pipeline every time code is pushed to the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Check out the repository code onto the server
+    - uses: actions/checkout@v3
+
+    # 2. Set up Python (Simulating your dev environment)
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    # 3. Install Dependencies from your requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install flake8 pytest  # Install testing tools
+
+    # 4. Lint with Flake8 (Checks for syntax errors and messy code)
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    # 5. Test Code Integrity (Does the code actually import?)
+    # Since you don't have unit tests yet, we just check if we can import your src modules without crashing.
+    - name: Verify Imports
+      run: |
+        python -c "from src import data_loader, models, preprocess_data; print('Modules imported successfully!')"
+
+    # 6. (Optional) Run a very small training dry-run
+    # We run 1 epoch with a tiny subset just to make sure the pipeline works
+    # Note: This assumes train_model.py can accept arguments or you create a small 'test_train.py'
+    # - name: Run Smoke Test (Dry Run)
+    #   run: python train_model.py --epochs 1 --dry-run
