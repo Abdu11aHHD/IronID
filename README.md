@@ -9,6 +9,8 @@
 **IronID Trainer** is designed to eliminate gym anxiety for beginners by helping them understand and properly use gym equipment without relying on trainers, labels, or prior experience.
 
 The app combines:
+- **Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
+- **Online AI Coach** — Provides tailored workout routines, tips.
 
 
 All vision processing is fully private and never leaves the device.
