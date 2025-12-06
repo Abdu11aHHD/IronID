@@ -1,4 +1,4 @@
-#  IronID — AI-Powered Gym Assistant
+ #  IronID — AI-Powered Gym Assistant
 
 > A hybrid AI mobile app that identifies gym equipment offline and provides personalized workout guidance online.
 
@@ -10,8 +10,6 @@
 
 The app combines:
 
-- **Offline Computer Vision** — Detects gym machines directly on-device using TensorFlow Lite.
-- **Online AI Coach** — Provides tailored workout routines, tips.
 
 All vision processing is fully private and never leaves the device.
 
