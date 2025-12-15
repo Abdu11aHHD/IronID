@@ -255,6 +255,25 @@ Model Training
  └─ Treadmill/
 ```
 
+## Project Architecture & Deployment Ecosystem
+
+We have integrated robust engineering practices to ensure model stability.
+
+* **CI/CD Pipeline:** Automated workflows via GitHub Actions (`.github/workflows`) to run tests on every push.
+* **Automated Testing:** Dedicated `tests/` folder containing:
+    * **Unit Tests:** Verifying data loader and augmentation logic.
+    * **Stress Tests:** Ensuring inference speed remains within limits under load.
+* **Monitoring & Logging:** Centralized `logs/` directory capturing training metrics and inference anomalies for debugging.
+
+### **2. Mobile Application (Android Deployment)**
+*Focus: UI/UX, Camera integration, TFLite Inference.*
+Once the model is optimized (Quantized to Int8/Float16), it is deployed to the Android application.
+
+* **Tech Stack:** Kotlin, Gradle, TensorFlow Lite.
+* **Features:** Real-time camera preview, chat interface, offline capability.
+* **Repo Structure:** Contains the `app` source code and Gradle build configurations.
+
+> *Note: The source code for the Android application is hosted in a separate repository.*
 
 
 ---
@@ -277,6 +296,8 @@ Evaluation script prints confusion matrix on valid samples
 ### Repository Structure
 ```bash
 IRONID/
+├── .github/workflows/       # CI/CD configurations
+├── logs/                    # Training and inference logs
 ├── models/
 │   └── mobilenet_pruned.keras       # Saved pruned model artifact on validtion
 ├── notebooks/                       # Experimental notebooks
@@ -292,6 +313,7 @@ IRONID/
 │   ├── models.py
 │   ├── preprocess_data.py
 │   └── utils.py
+├── tests/                   # Unit and deployment stress tests
 ├── .gitignore
 ├── README.md
 ├── confusionmatrixBaseline_Float32.png
